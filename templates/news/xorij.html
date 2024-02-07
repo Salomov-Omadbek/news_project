@@ -1,0 +1,23 @@
+{% extends 'news/base.html' %}
+{%  load static %}
+
+{% block title %} Xorij Xabarlar {% endblock title %}
+
+{% block content %}
+
+{% for news in xorij_yangiliklar  %}
+<div class="container">
+    <div class="row" >
+        <div class="col-sm-4">
+            <a href="{{ news.get_absolute_url }}" >
+            <img src="{{news.images.url}}" alt="{{news.title}}" width="50%">
+        </div>
+        <div class="col-sm-12">
+            <h3>{{news.title}}</h3>
+            </a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock content %}

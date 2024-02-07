@@ -1,0 +1,8 @@
+{% extends 'news/base.html' %}
+{% load static %}
+{% block content %}
+<div class="single_page_content"> <img class="img-center" src="{{news.images.url}}" alt="" width="100%">
+  <h1>{{news.title}}</h1>
+  <p>{{news.body}}</p>
+</div>
+{% endblock content %}
