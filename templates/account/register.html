@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'news/base.html' %}
+{% load static %}
+
+{% block title %}Register users{% endblock title %}
+
+{% block content %}
+    <h1>}Register new users</h1>
+    <p>Fill out the form below to register</p>
+    <form method="post">{% csrf_token %}
+       {{ user_form.as_p }}
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+{% endblock content %}

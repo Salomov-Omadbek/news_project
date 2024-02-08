@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import News,Category,Contacts
+from .models import News,Category,Contacts,Comment
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
     list_display = ['id','category','title' ,'publish_time','status']
@@ -18,3 +18,14 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Contacts)
 class ContactsAdmin(admin.ModelAdmin):
     list_display = ['id','email']
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user','body','create_time']
+    list_filter = ['active','create_time']
+    search_fields = ['user','body']
+    actions = ['disable_comments','activate_comments']
+    def disable_comments(self,request,queryset):
+        queryset.update(active=False)
+
+    def activate_comments(self,request,queryset):
+        queryset.update(active=True)

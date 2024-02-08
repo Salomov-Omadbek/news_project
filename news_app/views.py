@@ -1,8 +1,10 @@
 from django.http import HttpResponse
 from django.shortcuts import render,get_object_or_404
-from django.views.generic import TemplateView,ListView
-from .forms import ContactsForm
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView
+from .forms import ContactsForm, CommentsForm
 from .models import News, Category,Contacts
+from django.views.generic import UpdateView, DeleteView
 
 
 def news_list(request):
@@ -12,7 +14,18 @@ def news_list(request):
 
 def news_detail(request,news):
     news = get_object_or_404(News, slug=news,status = News.Status.Published)
-    context = {'news': news}
+    comments =news.comments.filter(active=True)
+    new_comments = None
+    if request.method == 'POST':
+        comment_form = CommentsForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comments = comment_form.save(commit=False)
+            new_comments.news = news
+            new_comments.user = request.user
+            new_comments.save()
+    else:
+        comment_form = CommentsForm()
+    context = {'news': news, 'comments': comments, 'new_comments': new_comments,'comment_form': comment_form}
     return render(request, 'news/news_detail.html', context)
 
 class homepage(TemplateView):
@@ -104,3 +117,18 @@ class XorijNewsView(ListView):
     def get_queryset(self):
         news = self.model.objects.all().filter(category__name = 'Xorij').order_by('-publish_time')
         return news
+
+class NewsUpdateView(UpdateView):
+    model = News
+    fields = ('title', 'body','category','images','status',)
+    template_name = 'update/news_edit.html'
+
+class NewsDeleteView(DeleteView):
+    model = News
+    template_name = 'update/news_delete.html'
+    success_url = reverse_lazy('home_page')
+
+class NewsCreateView(CreateView):
+    model = News
+    fields = ('title', 'slug','body','category','images','status',)
+    template_name = 'update/news_create.html'

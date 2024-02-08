@@ -87,9 +87,9 @@
                   {% endfor %}
                 </ul>
                 <ul class="spost_nav">
-                  <li>
-                    {% for news in xorij %}
+                  {% for news in xorij %}
                     {% if not forloop.first %}
+                  <li>
                     <div class="media wow fadeInDown"> <a href="{{news.get_absolute_url}}" class="media-left"> <img alt="" src="{{news.images.url}}"> </a>
                       <div class="media-body"> <a href="{{news.get_absolute_url}}" class="catg_title">{{news.title | truncatewords:5}}</a> </div>
                     </div>
@@ -216,9 +216,11 @@
             <div class="tab-content">
               <div role="tabpanel" class="tab-pane active" id="category">
                 <ul>
-                  {% for category in categories %}
-                  <li class="cat-item"><a href="#">{{ category.name }}</a></li>
-                    {% endfor %}
+
+                  <li class="cat-item"><a href="{% url 'local_page' %}">Mahhaliy</a></li>
+                   <li class="cat-item"><a href="{% url 'xorij_page' %}">Xorij</a></li>
+                  <li class="cat-item"><a href="{% url 'technology_page' %}">Texnologiya</a></li>
+                  <li class="cat-item"><a href="{% url 'sport_page' %}">Sport</a></li>
                 </ul>
               </div>
               <div role="tabpanel" class="tab-pane" id="video">

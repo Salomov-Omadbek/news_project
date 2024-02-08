@@ -5,6 +5,36 @@
   <h1>{{news.title}}</h1>
   <p>{{news.body}}</p>
 </div>
-{% endblock content %}
+<div class="card-footer text-center">
+  <a href="{% url 'news_update'  news.slug %}">Tahrirlash | </a>
+   <a href="{% url 'news_delete' news.slug %}">Ochirish</a>
+</div>
 
-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
+{% for comment in comments %}
+<div class="comments" style="padding: 10px">
+    <p class = 'font-weigth-bold'>
+        {{comment.user}}
+        <span class = 'text-muted font-weigth-normal'>
+            {{comment.create_time}}
+        </span>
+    </p>
+    {{comment.body | linebreaks}}
+</div>
+{%  endfor %}
+{% if user.is_authenticated %}
+<div class="col-md-8 card mb-4 mt-3">
+<div class="card-body">
+<h3>Izoh goldirish</h3>
+ <form method="POST" style="margin-top: 1.3em">{% csrf_token %}
+{{ comment_form.as_p }}
+<button type="submit" class="btn btn-primary btn-lg">Yuborish</button>
+     </forms>
+  </div>
+</div>
+{% else %}
+<div class="card-body">
+    <p class="text-danger">Izoh uchun</p>
+    <a href="{% url 'login'%}" style="color: #0ab20a">royxatdan oting</a>
+</div>
+{% endif %}
+{% endblock content %}

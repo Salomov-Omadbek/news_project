@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'news/base.html' %}
+{% load static %}
+{% block title %} Ochirish {% endblock title %}
+{% block content %}
+    <h2 class="text-center">Yanglikni ochirish</h2>
+    <form method="post">{% csrf_token %}
+        <img src="{{news.images.url}}" alt="">
+        <p>{{news.title | truncatewords:4}} ... yangilikni ochirmoqchimisz</p>
+        <button type="submit" class="btn btn-danger ml-2">Tasdiqlash</button>
+    </form>
+{% endblock content %}

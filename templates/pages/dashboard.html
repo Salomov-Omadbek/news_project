@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'news/base.html' %}
+{% load static %}
+
+
+{% block title %} Profile  {% endblock title %}
+{% block content %}
+
+<h3>Xush kelibsiz foydalanuvchi 😁</h3>
+<label>Usernamingiz :</label> <input value="{{user.username}}" readonly> <br>
+<label>Isminingiz :</label> <input value="{{user.first_name}}" readonly> <br>
+<label>Familyangiz :</label> <input value="{{user.last_name}}" readonly> <br>
+<label>Emailingiz :</label> <input value="{{user.email}}" readonly> <br>
+<h3><a href="{% url 'logout' %}"> LogOut</a></h3>
+<h4><a href="{%url 'password_change' %}" >Parolni almashtirish </a ></h4>
+
+{% endblock content %}

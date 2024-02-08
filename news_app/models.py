@@ -1,8 +1,11 @@
+from django.contrib.auth.models import User
 from django.db import models
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.apps import AppConfig
 from django.core.signals import setting_changed
+from django.views.generic import UpdateView, DeleteView
+
 
 class PublishedManager(models.Model):
     def get_queryset(self):
@@ -46,3 +49,16 @@ class Contacts(models.Model):
     def __str__(self):
         return self.email
 
+
+class Comment(models.Model):
+    news = models.ForeignKey(News,on_delete=models.CASCADE,related_name='comments')
+    user = models.ForeignKey(User,on_delete=models.CASCADE,related_name='comments')
+
+    body = models.TextField()
+    create_time = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+    class Meta:
+        ordering = ['create_time']
+
+    def __str__(self):
+        return f'Comments  {self.body} by {self.user}'
